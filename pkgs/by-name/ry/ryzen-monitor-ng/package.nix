@@ -26,7 +26,7 @@ stdenv.mkDerivation {
     postFetch = ''
       rm "$out/src/ryzen_monitor"
       rm -r "$out/src/lib/"
-      cp -r "${ryzen_smu}/lib/" "$out/src/lib/"
+      cp -r "${ryzen-smu}/lib/" "$out/src/lib/"
 
       make -C "$out" clean
     '';
