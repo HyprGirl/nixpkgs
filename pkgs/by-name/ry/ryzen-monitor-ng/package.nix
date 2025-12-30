@@ -1,10 +1,13 @@
 {
   lib,
   stdenv,
+  config,
   fetchFromGitHub,
   unstableGitUpdater,
 }:
-
+let
+  ryzen-smu = config.boot.kernelPackages.ryzen-smu;
+in
 stdenv.mkDerivation {
   pname = "ryzen-monitor-ng";
   version = "2.0.5-unstable-2023-11-05";
@@ -22,6 +25,9 @@ stdenv.mkDerivation {
     # These need to be removed before build stage.
     postFetch = ''
       rm "$out/src/ryzen_monitor"
+      rm -r "$out/src/lib/"
+      cp -r "${ryzen_smu}/lib/" "$out/src/lib/"
+
       make -C "$out" clean
     '';
   };
